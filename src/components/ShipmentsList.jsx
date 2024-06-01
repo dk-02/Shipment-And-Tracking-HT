@@ -11,7 +11,7 @@ function ShipmentsList() {
             id: '1',
             customerName: 'Ana Horvat',
             customerId: '45678',
-            status: 'dosTavLjena',
+            status: 'delivEred',
             trackingCode: 'HR123456789',
             createDate: '2024-05-25T09:30:00',
             addressFrom: {
@@ -31,7 +31,7 @@ function ShipmentsList() {
             id: '2',
             customerName: 'Marko Kovač',
             customerId: '34768',
-            status: 'in-process',
+            status: 'in_process',
             trackingCode: 'HR987654321',
             createDate: '2024-05-26T10:45:00',
             addressFrom: {
@@ -138,6 +138,18 @@ function ShipmentsList() {
         setFilteredOrders(filtered);
     }
 
+    const statusMapping = {
+        initialized: "Inicijalizirana",
+        in_process: "U obradi",
+        processed: "Obrađena",
+        shipped: "Poslana",
+        in_customs: "Na carini",
+        delivered: "Dostavljena",
+        returned: "Vraćena",
+        error: "Greška"
+    }
+
+
 
     return (
         <div className={"flex h-screen w-screen"}>
@@ -188,10 +200,10 @@ function ShipmentsList() {
                                     <select name="orderStatus" id="orderStatus" value={orderStatus} onChange={(e) => handleFilterChange(e, "orderStatus")} className={"h-8 bg-gray-100 ml-5 w-32"}>
                                         <option value="">...</option>
                                         <option value="initialized">Inicijalizirana</option>
-                                        <option value="in-process">U obradi</option>
+                                        <option value="in_process">U obradi</option>
                                         <option value="processed">Obrađena</option>
                                         <option value="shipped">Poslana</option>
-                                        <option value="in-customs">Na carini</option>
+                                        <option value="in_customs">Na carini</option>
                                         <option value="delivered">Dostavljena</option>
                                         <option value="returned">Vraćena</option>
                                         <option value="error">Greška</option>
@@ -213,7 +225,7 @@ function ShipmentsList() {
                                 <div key={order.id}
                                      className={"bg-white shadow-lg flex flex-col justify-center w-2/3 h-44 p-5 min-w-fit"}>
                                     <span>ID pošiljke: <strong>{order.id}</strong></span>
-                                    <span>Status pošiljke: <strong>{order.status}</strong></span>
+                                    <span>Status pošiljke: <strong>{statusMapping[order.status.toLowerCase()]}</strong></span>
                                     <span>Kod za praćenje pošiljke: <strong>{order.trackingCode}</strong></span>
                                     <span>Primatelj: {order.customerName}</span>
                                     <span>ID primatelja: {order.customerId}</span>
