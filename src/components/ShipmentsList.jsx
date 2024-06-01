@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import Menu from "./Menu";
 
 function ShipmentsList() {
 
     let str = "Get";
 
-    const orders = [
+
+    const [orders, setOrders] = useState([
         {
             id: '1',
             customerName: 'Ana Horvat',
@@ -101,7 +102,20 @@ function ShipmentsList() {
                 country: 'Hrvatska'
             }
         }
-    ];
+    ]);
+    const [orderId, setOrderId] = useState('');
+    const [filteredOrders, setFilteredOrders] = useState([]);
+
+    const handleFilterChange = (e) => {
+        const val = e.target.value;
+        setOrderId(val);
+
+        const filtered = orders.filter((order) => order.id.includes(val));
+
+        setFilteredOrders(filtered);
+    }
+
+
 
 
     return (
@@ -140,7 +154,7 @@ function ShipmentsList() {
                             <div className={"filtering grid grid-cols-2 gap-2 w-2/3 ml-5"}>
                                 <div>
                                     <label>ID POŠILJKE:</label>
-                                    <input type="text" className={"p-2 ml-5 h-8 bg-gray-100"}/>
+                                    <input type="text" value={orderId} onChange={handleFilterChange} className={"p-2 ml-5 h-8 bg-gray-100"}/>
                                 </div>
                                 <div>
                                     <label>ID PRIMATELJA:</label>
@@ -160,9 +174,9 @@ function ShipmentsList() {
 
 
                         <div
-                            className={"flex flex-wrap justify-center gap-2 ml-5 max-h-[75vh] overflow-y-scroll bg-gray-50 p-5"}>
-                            {orders.map((order, index) => (
-                                <div key={index}
+                            className={"flex flex-wrap justify-center gap-2 ml-5 h-[75vh] overflow-y-scroll bg-gray-50 p-5"}>
+                            {filteredOrders.map((order) => (
+                                <div key={order.id}
                                      className={"bg-white shadow-lg flex flex-col justify-center w-2/3 h-44 p-5 min-w-fit"}>
                                     <span>ID pošiljke: <strong>{order.id}</strong></span>
                                     <span>Status pošiljke: <strong>{order.status}</strong></span>
@@ -173,19 +187,7 @@ function ShipmentsList() {
                                 </div>
                             ))}
 
-
                         </div>
-
-                        {/*<div className={"flex flex-col gap-1 ml-28 mt-10"}>*/}
-                        {/*    {orders.map((order, index) => (*/}
-                        {/*        <div key={index} className={"bg-gray-100 p-3 text-lg"}>*/}
-                        {/*            <span>Narudžba br. {order.id}</span>*/}
-                        {/*        </div>*/}
-
-                        {/*    ))}*/}
-                        {/*</div>*/}
-
-
                     </div>
 
                 }
