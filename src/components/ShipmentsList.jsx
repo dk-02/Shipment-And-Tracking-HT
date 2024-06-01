@@ -10,6 +10,7 @@ function ShipmentsList() {
         {
             id: '1',
             customerName: 'Ana Horvat',
+            customerId: '45678',
             status: 'delivered',
             trackingCode: 'HR123456789',
             createDate: '2024-05-25T09:30:00',
@@ -29,6 +30,7 @@ function ShipmentsList() {
         {
             id: '2',
             customerName: 'Marko Kovač',
+            customerId: '34768',
             status: 'inProcess',
             trackingCode: 'HR987654321',
             createDate: '2024-05-26T10:45:00',
@@ -48,6 +50,7 @@ function ShipmentsList() {
         {
             id: '3',
             customerName: 'Ivana Babić',
+            customerId: '30527',
             status: 'shipped',
             trackingCode: 'HR246813579',
             createDate: '2024-05-27T11:15:00',
@@ -67,6 +70,7 @@ function ShipmentsList() {
         {
             id: '4',
             customerName: 'Petra Novak',
+            customerId: '58729',
             status: 'initialized',
             trackingCode: 'HR369258147',
             createDate: '2024-05-28T12:00:00',
@@ -86,6 +90,7 @@ function ShipmentsList() {
         {
             id: '5',
             customerName: 'Ante Kraljević',
+            customerId: '12345',
             status: 'returned',
             trackingCode: 'HR582469137',
             createDate: '2024-05-29T13:30:00',
@@ -104,13 +109,25 @@ function ShipmentsList() {
         }
     ]);
     const [orderId, setOrderId] = useState('');
+    const [customerId, setCustomerId] = useState('');
     const [filteredOrders, setFilteredOrders] = useState([]);
 
-    const handleFilterChange = (e) => {
+    const handleFilterChange = (e, orderBy) => {
         const val = e.target.value;
-        setOrderId(val);
+        let filtered = null;
 
-        const filtered = orders.filter((order) => order.id.includes(val));
+        switch (orderBy) {
+            case "orderId":
+                setOrderId(val);
+                filtered = orders.filter((order) => order.id.includes(val));
+                break;
+            case "customerId":
+                setCustomerId(val);
+                filtered = orders.filter((order) => order.customerId.includes(val));
+                break;
+            default:
+                filtered = orders;
+        }
 
         setFilteredOrders(filtered);
     }
@@ -154,11 +171,11 @@ function ShipmentsList() {
                             <div className={"filtering grid grid-cols-2 gap-2 w-2/3 ml-5"}>
                                 <div>
                                     <label>ID POŠILJKE:</label>
-                                    <input type="text" value={orderId} onChange={handleFilterChange} className={"p-2 ml-5 h-8 bg-gray-100"}/>
+                                    <input type="text" value={orderId} onChange={(e) => handleFilterChange(e,"orderId")} className={"p-2 ml-5 h-8 bg-gray-100"}/>
                                 </div>
                                 <div>
                                     <label>ID PRIMATELJA:</label>
-                                    <input type="text" className={"p-2 ml-5 h-8 bg-gray-100"}/>
+                                    <input type="text" value={customerId} onChange={(e) => handleFilterChange(e, "customerId")} className={"p-2 ml-5 h-8 bg-gray-100"}/>
                                 </div>
                                 <div>
                                     <label>STATUS POŠILJKE:</label>
@@ -174,7 +191,7 @@ function ShipmentsList() {
 
 
                         <div
-                            className={"flex flex-wrap justify-center gap-2 ml-5 h-[75vh] overflow-y-scroll bg-gray-50 p-5"}>
+                            className={"flex flex-col items-center gap-2 ml-5 h-[75vh] overflow-y-scroll bg-gray-50 p-5"}>
                             {filteredOrders.map((order) => (
                                 <div key={order.id}
                                      className={"bg-white shadow-lg flex flex-col justify-center w-2/3 h-44 p-5 min-w-fit"}>
@@ -182,6 +199,7 @@ function ShipmentsList() {
                                     <span>Status pošiljke: <strong>{order.status}</strong></span>
                                     <span>Kod za praćenje pošiljke: <strong>{order.trackingCode}</strong></span>
                                     <span>Primatelj: {order.customerName}</span>
+                                    <span>ID primatelja: {order.customerId}</span>
                                     <span>Adresa primatelja: {order.addressTo.street}, {order.addressTo.postcode}, {order.addressTo.city}, {order.addressTo.country}</span>
 
                                 </div>
