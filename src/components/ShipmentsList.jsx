@@ -11,7 +11,7 @@ function ShipmentsList() {
             id: '1',
             customerName: 'Ana Horvat',
             customerId: '45678',
-            status: 'delivered',
+            status: 'dosTavLjena',
             trackingCode: 'HR123456789',
             createDate: '2024-05-25T09:30:00',
             addressFrom: {
@@ -31,7 +31,7 @@ function ShipmentsList() {
             id: '2',
             customerName: 'Marko Kovač',
             customerId: '34768',
-            status: 'inProcess',
+            status: 'in-process',
             trackingCode: 'HR987654321',
             createDate: '2024-05-26T10:45:00',
             addressFrom: {
@@ -108,12 +108,14 @@ function ShipmentsList() {
             }
         }
     ]);
+
     const [orderId, setOrderId] = useState('');
     const [customerId, setCustomerId] = useState('');
-    const [filteredOrders, setFilteredOrders] = useState([]);
+    const [orderStatus, setOrderStatus] = useState('');
+    const [filteredOrders, setFilteredOrders] = useState(orders);
 
     const handleFilterChange = (e, orderBy) => {
-        const val = e.target.value;
+        const val = e.target.value.toLowerCase();
         let filtered = null;
 
         switch (orderBy) {
@@ -125,14 +127,16 @@ function ShipmentsList() {
                 setCustomerId(val);
                 filtered = orders.filter((order) => order.customerId.includes(val));
                 break;
+            case "orderStatus":
+                setOrderStatus(val);
+                filtered = orders.filter((order) => order.status.toLowerCase() === val);
+                break;
             default:
                 filtered = orders;
         }
 
         setFilteredOrders(filtered);
     }
-
-
 
 
     return (
@@ -179,7 +183,20 @@ function ShipmentsList() {
                                 </div>
                                 <div>
                                     <label>STATUS POŠILJKE:</label>
-                                    <input type="text" className={"p-2 ml-5 h-8 bg-gray-100"}/>
+                                    {/*<input type="text" value={orderStatus} onChange={(e) => handleFilterChange(e, "orderStatus")} className={"p-2 ml-5 h-8 bg-gray-100"}/>*/}
+
+                                    <select name="orderStatus" id="orderStatus" value={orderStatus} onChange={(e) => handleFilterChange(e, "orderStatus")} className={"h-8 bg-gray-100 ml-5 w-32"}>
+                                        <option value="">...</option>
+                                        <option value="initialized">Inicijalizirana</option>
+                                        <option value="in-process">U obradi</option>
+                                        <option value="processed">Obrađena</option>
+                                        <option value="shipped">Poslana</option>
+                                        <option value="in-customs">Na carini</option>
+                                        <option value="delivered">Dostavljena</option>
+                                        <option value="returned">Vraćena</option>
+                                        <option value="error">Greška</option>
+                                    </select>
+
                                 </div>
                                 <div>
                                     <label>BROJ UGOVORA:</label>
