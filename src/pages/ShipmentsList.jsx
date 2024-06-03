@@ -1,8 +1,23 @@
 import React, {useState} from "react";
 import Menu from "../components/Menu";
 import {useNavigate} from "react-router";
+import api from '../api';
 
 function ShipmentsList() {
+    const getShipmentTracking = async () => {
+        try {
+            const res = await api.get('/shipmentTracking');
+
+            console.log(res.data);
+            // return res.data;
+
+        } catch (error) {
+            console.error("Error fetching shipments.");
+            throw error;
+        }
+    }
+
+    getShipmentTracking();
 
     const [orders] = useState([
         {
