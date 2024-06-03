@@ -3,8 +3,6 @@ import Menu from "./Menu";
 
 function ShipmentsList() {
 
-    let str = "Get";
-
     const [orders] = useState([
         {
             id: '1',
@@ -162,88 +160,59 @@ function ShipmentsList() {
             <Menu/>
 
             <div className={"contentDiv ml-5"}>
-
-                {str === "new" &&
-
-                    <div className={"flex flex-col"}>
-                        <span>Prijevoznik</span>
-                        <span>Šifra za praćenje</span>
-                        <span>URL do stranice za praćenje pošiljke</span>
-                        <span>Datum početka praćenja pošiljke</span>
-                        <span>Status paketa</span>
-                        <span>Datum zadnje promjene statusa</span>
-                        <span>Razlog zadnje promjene statusa</span>
-                        <span>Masa paketa (g)</span>
-                        <span>Procijenjeni datum isporuke</span>
-                        <span>Adresa pošiljatelja</span>
-                        <span>Adresa primatelja</span>
-                        <span>Order?</span>
-                        <span>Korisnik?</span>
-                        <span>Datum kreiranja pošiljke</span>
-                    </div>
-
-                }
-
-                {str === "Get" &&
-
-                    <div className={"flex flex-col pt-5 gap-5 w-[75vw]"}>
-                        <div>
-                            <h1 className={"text-lg font-bold text-[#e20074] mb-2"}>Filtriraj:</h1>
-                            <div className={"filtering grid grid-cols-2 gap-2 w-2/3 ml-5"}>
-                                <div>
-                                    <label>ID POŠILJKE:</label>
-                                    <input type="text" value={orderId} onChange={(e) => handleFilterChange(e,"orderId")} className={"p-2 ml-5 h-8 bg-gray-100"}/>
-                                </div>
-                                <div>
-                                    <label>ID PRIMATELJA:</label>
-                                    <input type="text" value={customerId} onChange={(e) => handleFilterChange(e, "customerId")} className={"p-2 ml-5 h-8 bg-gray-100"}/>
-                                </div>
-                                <div>
-                                    <label>STATUS POŠILJKE:</label>
-                                    {/*<input type="text" value={orderStatus} onChange={(e) => handleFilterChange(e, "orderStatus")} className={"p-2 ml-5 h-8 bg-gray-100"}/>*/}
-
-                                    <select name="orderStatus" id="orderStatus" value={orderStatus} onChange={(e) => handleFilterChange(e, "orderStatus")} className={"h-8 bg-gray-100 ml-5 w-32"}>
-                                        <option value="">...</option>
-                                        <option value="initialized">Inicijalizirana</option>
-                                        <option value="in_process">U obradi</option>
-                                        <option value="processed">Obrađena</option>
-                                        <option value="shipped">Poslana</option>
-                                        <option value="in_customs">Na carini</option>
-                                        <option value="delivered">Dostavljena</option>
-                                        <option value="returned">Vraćena</option>
-                                        <option value="error">Greška</option>
-                                    </select>
-
-                                </div>
-                                <div>
-                                    <label>BROJ UGOVORA:</label>
-                                    <input type="text" className={"p-2 ml-5 h-8 bg-gray-100"}/>
-                                </div>
+                <div className={"flex flex-col pt-5 gap-5 w-[75vw]"}>
+                    <div>
+                        <h1 className={"text-lg font-bold text-[#e20074] mb-2"}>Filtriraj:</h1>
+                        <div className={"filtering grid grid-cols-2 gap-2 w-2/3 ml-5"}>
+                            <div>
+                                <label>ID POŠILJKE:</label>
+                                <input type="text" value={orderId} onChange={(e) => handleFilterChange(e,"orderId")} className={"p-2 ml-5 h-8 bg-gray-100"}/>
+                            </div>
+                            <div>
+                                <label>ID PRIMATELJA:</label>
+                                <input type="text" value={customerId} onChange={(e) => handleFilterChange(e, "customerId")} className={"p-2 ml-5 h-8 bg-gray-100"}/>
+                            </div>
+                            <div>
+                                <label>STATUS POŠILJKE:</label>
+                                <select name="orderStatus" id="orderStatus" value={orderStatus} onChange={(e) => handleFilterChange(e, "orderStatus")} className={"h-8 bg-gray-100 ml-5 w-32"}>
+                                    <option value="">...</option>
+                                    <option value="initialized">Inicijalizirana</option>
+                                    <option value="in_process">U obradi</option>
+                                    <option value="processed">Obrađena</option>
+                                    <option value="shipped">Poslana</option>
+                                    <option value="in_customs">Na carini</option>
+                                    <option value="delivered">Dostavljena</option>
+                                    <option value="returned">Vraćena</option>
+                                    <option value="error">Greška</option>
+                                </select>
 
                             </div>
-                        </div>
-
-
-                        <div
-                            className={"flex flex-col items-center gap-2 ml-5 h-[75vh] overflow-y-scroll bg-gray-50 p-5"}>
-                            {filteredOrders.map((order) => (
-                                <div key={order.id}
-                                     className={"bg-white shadow-lg flex flex-col justify-center w-2/3 h-44 p-5 min-w-fit"}>
-                                    <span>ID pošiljke: <strong>{order.id}</strong></span>
-                                    <span>Status pošiljke: <strong>{statusMapping[order.status.toLowerCase()]}</strong></span>
-                                    <span>Kod za praćenje pošiljke: <strong>{order.trackingCode}</strong></span>
-                                    <span>Primatelj: {order.customerName}</span>
-                                    <span>ID primatelja: {order.customerId}</span>
-                                    <span>Adresa primatelja: {order.addressTo.street}, {order.addressTo.postcode}, {order.addressTo.city}, {order.addressTo.country}</span>
-
-                                </div>
-                            ))}
 
                         </div>
                     </div>
 
-                }
+                    <div
+                        className={"flex flex-col items-center gap-2 ml-5 h-[75vh] overflow-y-scroll bg-gray-50 p-5"}>
+                        {filteredOrders.map((order) => (
+                            <div key={order.id}
+                                 className={"bg-white shadow-lg flex flex-col justify-center w-2/3 h-fit p-5 min-w-fit"}>
+                                <span>ID pošiljke: <strong>{order.id}</strong></span>
+                                <span>Status pošiljke: <strong>{statusMapping[order.status.toLowerCase()]}</strong></span>
+                                <span>Kod za praćenje pošiljke: <strong>{order.trackingCode}</strong></span>
+                                {/*<span>Primatelj: {order.customerName}</span>*/}
+                                {/*<span>ID primatelja: {order.customerId}</span>*/}
+                                {/*<span>Adresa primatelja: {order.addressTo.street}, {order.addressTo.postcode}, {order.addressTo.city}, {order.addressTo.country}</span>*/}
 
+                                <div className={"orderButtons flex gap-2 mt-4 self-center"}>
+                                    <button className={"min-w-[110px] bg-[#e20074] rounded px-3 py-1 text-white font-semibold tracking-wider text-sm"}>Podatci o pošiljci</button>
+                                    <button className={"min-w-[110px] bg-[#e20074] rounded px-3 py-1 text-white font-semibold tracking-wider text-sm"}>Promijeni podatke</button>
+                                </div>
+
+
+                            </div>
+                        ))}
+                    </div>
+                </div>
 
             </div>
 
