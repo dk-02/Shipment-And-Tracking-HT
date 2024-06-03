@@ -39,11 +39,14 @@ function ShipmentDetail() {
                     <span>ID pošiljke:</span>
                     <span>{editedText}</span>
                     <button onClick={handleToggleEditing}>Uredi</button>
-                    {/*<span>Šifra za praćenje</span>*/}
+                    {/*<span>Sadržaj pošiljke</span>*/}
+                    {/*<span>Datum kreiranja narudžbe</span>*/}
+                    {/*<span>Masa paketa (g)</span>*/}
+
                     {/*<span>Kod za praćenje pošiljke</span>*/}
-                    {/*<span>Status paketa</span>*/}
-                    {/*<span>Datum zadnje promjene statusa</span>*/}
-                    {/*<span>Razlog zadnje promjene statusa</span>*/}
+                    {/*<span>Status pošiljke</span>*/}
+                    {/*<span>Datum zadnje promjene statusa pošiljke</span>*/}
+                    {/*<span>Razlog zadnje promjene statusa pošiljke</span>*/}
 
                     {/*<span>Pošiljatelj</span>*/}
                     {/*<span>ID pošiljatelja</span>*/}
@@ -53,10 +56,6 @@ function ShipmentDetail() {
                     {/*<span>ID primatelja</span>*/}
                     {/*<span>Adresa primatelja</span>*/}
 
-                    {/*<span>Sadržaj narudžbe</span>*/}
-                    {/*<span>Datum kreiranja narudžbe</span>*/}
-                    {/*<span>Masa paketa (g)</span>*/}
-
                     {/*<span>Prijevoznik</span>*/}
                     {/*<span>URL do stranice za praćenje pošiljke</span>*/}
                     {/*<span>Datum početka praćenja pošiljke</span>*/}
@@ -65,7 +64,7 @@ function ShipmentDetail() {
                 </div>
                 :
                 <div className={"flex flex-col"}>
-                    <span>ID pošiljke</span>
+                    <span>ID pošiljke:</span>
                     <input type="text" name={"userId"} value={editedText} onChange={handleInputChange} />
                     <button onClick={handleSubmit}>Pohrani promjene</button>
                     {/*<span>Šifra za praćenje</span>*/}
