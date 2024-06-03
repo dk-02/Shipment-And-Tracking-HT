@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Menu from "./Menu";
+import {useNavigate} from "react-router";
 
 function ShipmentsList() {
 
@@ -152,6 +153,7 @@ function ShipmentsList() {
         error: "Greška"
     }
 
+    const navigate = useNavigate();
 
 
     return (
@@ -199,13 +201,10 @@ function ShipmentsList() {
                                 <span>ID pošiljke: <strong>{order.id}</strong></span>
                                 <span>Status pošiljke: <strong>{statusMapping[order.status.toLowerCase()]}</strong></span>
                                 <span>Kod za praćenje pošiljke: <strong>{order.trackingCode}</strong></span>
-                                {/*<span>Primatelj: {order.customerName}</span>*/}
-                                {/*<span>ID primatelja: {order.customerId}</span>*/}
-                                {/*<span>Adresa primatelja: {order.addressTo.street}, {order.addressTo.postcode}, {order.addressTo.city}, {order.addressTo.country}</span>*/}
 
                                 <div className={"orderButtons flex gap-2 mt-4 self-center"}>
-                                    <button className={"min-w-[110px] bg-[#e20074] rounded px-3 py-1 text-white font-semibold tracking-wider text-sm"}>Podatci o pošiljci</button>
-                                    <button className={"min-w-[110px] bg-[#e20074] rounded px-3 py-1 text-white font-semibold tracking-wider text-sm"}>Promijeni podatke</button>
+                                    <button className={"min-w-[110px] bg-[#e20074] rounded px-3 py-1 text-white font-semibold tracking-wider text-sm"} onClick={() => navigate("/shipments/" + order.id)}>Podatci o pošiljci</button>
+                                    <button className={"min-w-[110px] bg-[#e20074] rounded px-3 py-1 text-white font-semibold tracking-wider text-sm"} onClick={() => navigate("/")}>Promijeni podatke</button>
                                 </div>
 
 

@@ -5,6 +5,7 @@ import {Link, useLocation} from "react-router-dom";
 function Menu() {
 
     const location = useLocation();
+    const isMainPage = (location.pathname === "/");
 
     return (
         <div className={"min-w-fit w-80 shadow-lg shadow-gray-300 p-5 flex flex-col gap-5"}>
@@ -18,21 +19,20 @@ function Menu() {
 
             <div className={"optionsDiv"}>
                 <ul>
-                    {location.pathname === "/create-shipment" ?
-                        <li className={"hover:bg-[#f2f2f2] hover:text-[#e20074] transition-all duration-300 h-10 flex items-center cursor-pointer p-2"}>
-                            <a href="/">POVRATAK NA POČETNU</a>
-                        </li> :
-                        <li className={"hover:bg-[#f2f2f2] hover:text-[#e20074] transition-all duration-300 h-10 flex items-center cursor-pointer p-2"}>
-                            <a href="/create-shipment">KREIRAJ NOVU DOSTAVU</a>
-                        </li>}
+                    {!isMainPage ?
+                        <Link to={"/"}>
+                            <li className={"hover:bg-[#f2f2f2] hover:text-[#e20074] transition-all duration-300 h-10 flex items-center cursor-pointer p-2"}>
+                                <span>POVRATAK NA POČETNU</span>
+                            </li>
+                        </Link>
+                        :
+                        <Link to={"/create-shipment"}>
+                            <li className={"hover:bg-[#f2f2f2] hover:text-[#e20074] transition-all duration-300 h-10 flex items-center cursor-pointer p-2"}>
+                                <span>KREIRAJ NOVU DOSTAVU</span>
+                            </li>
+                        </Link>
 
-                    {/*<li className={"hover:bg-[#f2f2f2] hover:text-[#e20074] h-10 flex items-center cursor-pointer p-2"}>*/}
-                    {/*    <a href="/public">PODACI O DOSTAVI</a>*/}
-                    {/*</li>*/}
-                    {/*<li className={"hover:bg-[#f2f2f2] hover:text-[#e20074] h-10 flex items-center cursor-pointer p-2"}>*/}
-                    {/*    <a href="/public">PROMIJENI PODATKE O DOSTAVI</a>*/}
-
-                    {/*</li>*/}
+                    }
 
                 </ul>
 
