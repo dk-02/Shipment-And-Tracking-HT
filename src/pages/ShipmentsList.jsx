@@ -1,112 +1,26 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Menu from "../components/Menu";
 import {useNavigate} from "react-router";
-// import api from "../api";
+import api from '../api';
+
 function ShipmentsList() {
 
-    const [orders] = useState([
-        {
-            id: '1',
-            customerName: 'Ana Horvat',
-            customerId: '45678',
-            status: 'delivEred',
-            trackingCode: 'HR123456789',
-            createDate: '2024-05-25T09:30:00',
-            addressFrom: {
-                street: 'Trg bana Josipa Jelačića 83',
-                city: 'Zagreb',
-                postcode: '10000',
-                country: 'Hrvatska'
-            },
-            addressTo: {
-                street: 'Ilica 8',
-                city: 'Zagreb',
-                postcode: '10000',
-                country: 'Hrvatska'
-            }
-        },
-        {
-            id: '2',
-            customerName: 'Marko Kovač',
-            customerId: '34768',
-            status: 'in_process',
-            trackingCode: 'HR987654321',
-            createDate: '2024-05-26T10:45:00',
-            addressFrom: {
-                street: 'Ilica 5',
-                city: 'Zagreb',
-                postcode: '10000',
-                country: 'Hrvatska'
-            },
-            addressTo: {
-                street: 'Savska 157',
-                city: 'Zagreb',
-                postcode: '10000',
-                country: 'Hrvatska'
-            }
-        },
-        {
-            id: '3',
-            customerName: 'Ivana Babić',
-            customerId: '30527',
-            status: 'shipped',
-            trackingCode: 'HR246813579',
-            createDate: '2024-05-27T11:15:00',
-            addressFrom: {
-                street: 'Savska 155',
-                city: 'Zagreb',
-                postcode: '10000',
-                country: 'Hrvatska'
-            },
-            addressTo: {
-                street: 'Trg bana Josipa Jelačića 76',
-                city: 'Zagreb',
-                postcode: '10000',
-                country: 'Hrvatska'
-            }
-        },
-        {
-            id: '4',
-            customerName: 'Petra Novak',
-            customerId: '58729',
-            status: 'initialized',
-            trackingCode: 'HR369258147',
-            createDate: '2024-05-28T12:00:00',
-            addressFrom: {
-                street: 'Trg bana Josipa Jelačića 10',
-                city: 'Zagreb',
-                postcode: '10000',
-                country: 'Hrvatska'
-            },
-            addressTo: {
-                street: 'Ilica 22',
-                city: 'Zagreb',
-                postcode: '10000',
-                country: 'Hrvatska'
-            }
-        },
-        {
-            id: '5',
-            customerName: 'Ante Kraljević',
-            customerId: '12345',
-            status: 'returned',
-            trackingCode: 'HR582469137',
-            createDate: '2024-05-29T13:30:00',
-            addressFrom: {
-                street: 'Ilica 77',
-                city: 'Zagreb',
-                postcode: '10000',
-                country: 'Hrvatska'
-            },
-            addressTo: {
-                street: 'Trg bana Josipa Jelačića 56',
-                city: 'Zagreb',
-                postcode: '10000',
-                country: 'Hrvatska'
+    useEffect(() => {
+        const getShipmentTracking = async () => {
+            try {
+                const res = await api.get('/shipmentTracking');
+                setFilteredOrders(res.data);
+                setOrders(res.data);
+            } catch (error) {
+                console.error("Error fetching shipments.");
+                throw error;
             }
         }
-    ]);
 
+        getShipmentTracking().catch(() => alert("Dogodila se greška pri dohvatu podataka."));
+    }, []);
+
+    const [orders, setOrders] = useState([]);
     const [orderId, setOrderId] = useState('');
     const [customerId, setCustomerId] = useState('');
     const [orderStatus, setOrderStatus] = useState('');
