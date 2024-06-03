@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ShipmentDetail from './components/ShipmentDetail';
-import ShipmentForm from './components/ShipmentForm';
-import ShipmentsList from "./components/ShipmentsList";
+import ShipmentDetail from './pages/ShipmentDetail';
+import ShipmentForm from './pages/ShipmentForm';
+import ShipmentsList from "./pages/ShipmentsList";
 import React from "react";
 
 function App() {
