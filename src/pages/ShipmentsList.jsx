@@ -9,6 +9,8 @@ function ShipmentsList() {
         const getShipmentTracking = async () => {
             try {
                 const res = await api.get('/shipmentTracking');
+                console.log(res.data)
+
                 setFilteredOrders(res.data);
                 setOrders(res.data);
             } catch (error) {
@@ -26,15 +28,15 @@ function ShipmentsList() {
     const [orderStatus, setOrderStatus] = useState('');
     const [filteredOrders, setFilteredOrders] = useState(orders);
 
-    const handleFilterChange = (e, orderBy) => {
+    const handleFilterChange = (e, filterBy) => {
         const val = e.target.value.toLowerCase();
         let filtered = null;
 
-        if(val === "") {
+        if(filterBy === "orderStatus" && val === "") {
             setOrderStatus(val);
             filtered = orders;
         } else {
-            switch (orderBy) {
+            switch (filterBy) {
                 case "orderId":
                     setOrderId(val);
                     filtered = orders.filter((order) => order.id.includes(val));
@@ -115,10 +117,11 @@ function ShipmentsList() {
                                 <span>ID pošiljke: <strong>{order.id}</strong></span>
                                 <span>Status pošiljke: <strong>{statusMapping[order.status.toLowerCase()]}</strong></span>
                                 <span>Kod za praćenje pošiljke: <strong>{order.trackingCode}</strong></span>
+                                <span>ID primatelja: <strong>{order.customerId}</strong></span>
 
                                 <div className={"orderButtons flex gap-2 mt-4 self-center"}>
                                     <button className={"min-w-[110px] bg-[#e20074] rounded px-3 py-1 text-white font-semibold tracking-wider text-sm"} onClick={() => navigate("/shipments/" + order.id)}>Podatci o pošiljci</button>
-                                    <button className={"min-w-[110px] bg-[#e20074] rounded px-3 py-1 text-white font-semibold tracking-wider text-sm"} onClick={() => navigate("/")}>Promijeni podatke</button>
+                                    <button className={"min-w-[110px] bg-[#e20074] rounded px-3 py-1 text-white font-semibold tracking-wider text-sm"} onClick={() => navigate("/shipments/" + order.id)}>Promijeni podatke</button>
                                 </div>
 
 
