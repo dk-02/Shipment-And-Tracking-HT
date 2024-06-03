@@ -5,8 +5,7 @@ function ShipmentsList() {
 
     let str = "Get";
 
-
-    const [orders, setOrders] = useState([
+    const [orders] = useState([
         {
             id: '1',
             customerName: 'Ana Horvat',
@@ -118,21 +117,27 @@ function ShipmentsList() {
         const val = e.target.value.toLowerCase();
         let filtered = null;
 
-        switch (orderBy) {
-            case "orderId":
-                setOrderId(val);
-                filtered = orders.filter((order) => order.id.includes(val));
-                break;
-            case "customerId":
-                setCustomerId(val);
-                filtered = orders.filter((order) => order.customerId.includes(val));
-                break;
-            case "orderStatus":
-                setOrderStatus(val);
-                filtered = orders.filter((order) => order.status.toLowerCase() === val);
-                break;
-            default:
-                filtered = orders;
+        if(val === "") {
+            setOrderStatus(val);
+            filtered = orders;
+        } else {
+            switch (orderBy) {
+                case "orderId":
+                    setOrderId(val);
+                    filtered = orders.filter((order) => order.id.includes(val));
+                    break;
+                case "customerId":
+                    setCustomerId(val);
+                    filtered = orders.filter((order) => order.customerId.includes(val));
+                    break;
+                case "orderStatus":
+                    setOrderStatus(val);
+                    filtered = orders.filter((order) => order.status.toLowerCase() === val);
+                    break;
+                default:
+                    filtered = orders;
+                    break;
+            }
         }
 
         setFilteredOrders(filtered);
